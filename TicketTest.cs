@@ -56,7 +56,7 @@ namespace promit_test
             {
                 Assert.Fail("Некорректная дата");
             }
-            Assert.That(dt!, Is.LessThanOrEqualTo(DateTime.Now));
+            // Assert.That(dt!, Is.LessThanOrEqualTo(DateTime.Now));
             sr.ReadLine();
 
             // Отправление

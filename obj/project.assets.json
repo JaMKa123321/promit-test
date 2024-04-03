@@ -987,11 +987,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Projects\\Promit\\promit-test\\promit-test.csproj",
+      "projectUniqueName": "C:\\Users\\vysot\\git\\promit-test\\promit-test.csproj",
       "projectName": "promit-test",
-      "projectPath": "E:\\Projects\\Promit\\promit-test\\promit-test.csproj",
+      "projectPath": "C:\\Users\\vysot\\git\\promit-test\\promit-test.csproj",
       "packagesPath": "C:\\Users\\vysot\\.nuget\\packages\\",
-      "outputPath": "E:\\Projects\\Promit\\promit-test\\obj\\",
+      "outputPath": "C:\\Users\\vysot\\git\\promit-test\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\vysot\\AppData\\Roaming\\NuGet\\NuGet.Config"

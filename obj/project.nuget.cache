@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Eax6212NGhSxUC9teAoTErti2KCeQa+xEmeV/vMLmFexAl2Tdfr2ka7n07mYRt47LHUr/cKtjMkPKkcCBLKpFA==",
+  "dgSpecHash": "Q1FGA+bQo66To6IR4N8K4vMrgB0k7Biw9LWEJXIPaAvdG76AnlULrtY2VvDhzy00+CMkhhxCnPcQGUFs5jC1sA==",
   "success": true,
-  "projectFilePath": "E:\\Projects\\Promit\\promit-test\\promit-test.csproj",
+  "projectFilePath": "C:\\Users\\vysot\\git\\promit-test\\promit-test.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vysot\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\vysot\\.nuget\\packages\\microsoft.codecoverage\\17.8.0\\microsoft.codecoverage.17.8.0.nupkg.sha512",
