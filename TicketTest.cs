@@ -1,66 +1,49 @@
-using System.IO;
-using System.Collections.Generic;
-using NUnit.Framework;
-using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace promit_test
 {
     [TestFixture]
     public class TicketTest
     {
-        string path = AppDomain.CurrentDomain.BaseDirectory;
 
-        public static int[] receiptNums = {6, 7};
+        // Определяем номера файлов-билетов в директории
+        public static int[] ReceiptNums()
+        {
+            string directory = "../../../promit";
 
+            string[] txtFiles = Directory.GetFiles(directory, "*.txt");
+            int[] toReturn = new int[txtFiles.Length];
+        
+            for (int i = 0; i < txtFiles.Length; i++)
+            {
+                string pattern = @"\d{3}[.]";
+                int pos = Regex.Match(txtFiles[i], pattern).Index;
+                toReturn[i] = Int32.Parse($"{txtFiles[i][pos]}{txtFiles[i][pos+1]}{txtFiles[i][pos+2]}");
+            }
 
-        [TestCaseSource(nameof(receiptNums))]
-        public void Test1(int current)
+            return toReturn;
+        }
+
+        [TestCaseSource(nameof(ReceiptNums))]
+        public void Test(int current)
         {
             StreamReader sr = new StreamReader("../../../promit/Receipt_" + current.ToString().PadLeft(3, '0') + ".txt");
             sr.ReadLine();
             sr.ReadLine();
 
-            // Дата
-            string read = "";
-            while ( ((char) sr.Peek()) != '\r')
+            // Паттерны для даты, отправления и прибытия
+            string[] patterns1 = {@"на\s*\d\s\d.*\d\s\d.*\d\s\d\s\d", @"от\s*.*[a-zA-Z]*", @"до\s*.*[a-zA-Z]*"};
+            string? line;
+            foreach (string pattern in patterns1)
             {
-                char next = (char) sr.Read();
-                read += (Char.IsDigit(next) || next == '.') ? next : "";
+                line = sr.ReadLine();
+                if (line == null)
+                    Assert.Fail("Недостаточно строк");
+                Assert.True(CheckLine(line!, pattern));
             }
-            DateTime? dt = null;
-            try
-            {
-                dt = DateTime.ParseExact(read, "dd.MM.yyyy", null);
-            }
-            catch
-            {
-                Assert.Fail("Некорректная дата");
-            }
-            // Assert.That(dt!, Is.LessThanOrEqualTo(DateTime.Now));
-            sr.ReadLine();
-
-            // Отправление
-            read = "";
-            while ( ((char) sr.Peek()) != '\r')
-            {
-                char next = (char) sr.Read();
-                read += (next != ' ') ? next : "";
-            }
-            Assert.That(read.Length, Is.GreaterThan(2));
-            sr.ReadLine();
-
-            // Прибытие
-            read = "";
-            while ( ((char) sr.Peek()) != '\r')
-            {
-                char next = (char) sr.Read();
-                read += (next != ' ') ? next : "";
-            }
-            Assert.That(read.Length, Is.GreaterThan(2));
-            sr.ReadLine();
 
             // Номер билета
-            read = "";
+            string read = "";
             while (read.Length < 5 && ((char) sr.Peek()) != '\r')
             {
                 char next = (char) sr.Read();
@@ -81,47 +64,20 @@ namespace promit_test
             Assert.That(Int64.Parse(read), Is.GreaterThan(0));
             sr.ReadLine();
 
-            // Перевозка
-            read = "";
-            string number = "";
-            while (((char) sr.Peek()) != '\r')
+            // Паттерны для перевозки, стоимости по тарифу и итога
+            string[] patterns2 = {@"Перевозка.*->.*\d*$", @"Стоимость по тарифу:\s*=\d*[.,]\d*$", @"ИТОГ: \d*[.,]\d*"};
+            foreach (string pattern in patterns2)
             {
-                char next = (char) sr.Read();
-                read += next != ' ' ? next : "";
-                number += Char.IsDigit(next) ? next : "";
+                line = sr.ReadLine();
+                if (line == null)
+                    Assert.Fail("Недостаточно строк");
+                Assert.True(CheckLine(line!, pattern));
             }
-            Assert.That(number.Length, Is.GreaterThanOrEqualTo(4));
-            Assert.That(read.Length, Is.GreaterThan(9));
-            sr.ReadLine();
+        }
 
-            // Стоимость по тарифу
-            while (((char) sr.Peek()) != '=' || ((char) sr.Peek()) != '\r')
-                sr.Read();
-            
-            read = "";
-            while (((char) sr.Peek()) != '\r')
-            {
-                char next = (char) sr.Read();
-                read += Char.IsDigit(next) ? next : "";
-            }
-            Assert.That((float) Int32.Parse(read) / 100, Is.GreaterThan(0));
-            sr.ReadLine();
-
-            // ИТОГ
-            read = "";
-            for (int i = 0; i < 4; i++)
-            {
-                read += (char) sr.Read();
-            }
-            Assert.That(read, Is.EqualTo("ИТОГ"));
-
-            read = "";
-            while ( ((char) sr.Peek()) != '\r' )
-            {
-                char next = (char) sr.Read();
-                read += Char.IsDigit(next) ? next : "";
-            }
-            Assert.That(read.Length, Is.GreaterThan(0));
+        private bool CheckLine(string line, string pattern)
+        {
+            return Regex.Match(line, pattern).Index == 0;
         }
     }
 }
