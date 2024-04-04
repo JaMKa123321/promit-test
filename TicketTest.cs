@@ -8,30 +8,10 @@ namespace promit_test
     [TestFixture]
     public class TicketTest
     {
-        // const int maxReceipts = 100;
-        public int currentNum = 0;
         string path = AppDomain.CurrentDomain.BaseDirectory;
-
-        // public static List<int> GetReceiptNums()
-        // {
-        //     List<int> receiptNums = new List<int>();
-        //     int i = 0;
-        //     while (i < maxReceipts)
-        //     {
-        //         if ( File.Exists("promit/Receipt_" + i.ToString().PadLeft(3, '0') + ".txt" ) )
-        //             receiptNums.Add(i);
-        //         i++;
-        //     }
-        //     return receiptNums;
-        // }
 
         public static int[] receiptNums = {6, 7};
 
-        [TearDown]
-        public void Teardown()
-        {
-            currentNum++;
-        }
 
         [TestCaseSource(nameof(receiptNums))]
         public void Test1(int current)

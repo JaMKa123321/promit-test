@@ -5,7 +5,6 @@
     <RootNamespace>promit_test</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <!-- <StartupObject>Program</StartupObject> -->
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>

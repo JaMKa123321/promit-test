@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("promit-test")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2821b6107e5cfc70d9bc1cade42bc993d000216e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7ae06cd4fba21ef5feccbb21e7891f361601c8e8")]
 [assembly: System.Reflection.AssemblyProductAttribute("promit-test")]
 [assembly: System.Reflection.AssemblyTitleAttribute("promit-test")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
